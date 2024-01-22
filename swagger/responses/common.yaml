@@ -1,0 +1,22 @@
+successResponseNoData:
+  description: successful response with no data
+badRequest:
+  description: bad request
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          error:
+            type: string
+        example: { "error": "errorMessage" }
+internalServerError:
+  description: internal server error
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          error:
+            type: string
+        example: { "error": "errorMessage" }

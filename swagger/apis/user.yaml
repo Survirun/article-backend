@@ -1,0 +1,128 @@
+get_user_exist_uid:
+  get:
+    tags:
+      - User
+    summary: 유저 고유 ID 존재 여부 조회
+    consumes:
+      - application/json
+    parameters:
+      - in: path
+        name: uid
+        schema:
+          type: string
+        required: true
+        description: User Own ID
+    responses:
+      '200':
+        $ref: "../responses/user.yaml#/user_found"
+      '404':
+        $ref: "../responses/user.yaml#/no_user_found"
+      '500':
+        $ref: "../responses/common.yaml#/internalServerError"
+post_user_new:
+  post:
+    tags:
+      - User
+    summary: 유저 생성
+    consumes:
+      - application/json
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/user.yaml#/user_gen"
+    responses:
+      '201':
+        $ref: "../responses/common.yaml#/successResponseNoData"
+      '400':
+        $ref: "../responses/common.yaml#/badRequest"
+      '500':
+        $ref: "../responses/common.yaml#/internalServerError"
+my:
+  get:
+    tags:
+      - User
+    summary: 나의 정보 가져오기
+    consumes:
+      - application/json
+    security:
+      - UIDAuth: []
+    parameters:
+      - name: uid
+        in: header
+        type: string
+        required: true
+        description: User ID
+    responses:
+      '200':
+        $ref: "../responses/user.yaml#/user_info"
+      '400':
+        $ref: "../responses/common.yaml#/badRequest"
+      '500':
+        $ref: "../responses/common.yaml#/internalServerError"
+  patch:
+    tags:
+      - User
+    summary: 나의 정보 수정하기
+    consumes:
+      - application/json
+    security:
+      - UIDAuth: [ ]
+    parameters:
+      - name: uid
+        in: header
+        type: string
+        required: true
+        description: User ID
+    requestBody:
+      x-name: body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/user.yaml#/user_patch"
+    responses:
+      '200':
+        $ref: "../responses/common.yaml#/successResponseNoData"
+      '400':
+        $ref: "../responses/common.yaml#/badRequest"
+      '500':
+        $ref: "../responses/common.yaml#/internalServerError"
+my_proficiency:
+  patch:
+    tags:
+      - User
+    summary: 유저 운동 숙련도 증감
+    consumes:
+      - application/json
+    security:
+      - UIDAuth: [ ]
+    parameters:
+      - name: uid
+        in: header
+        type: string
+        required: true
+        description: User ID
+      - name: amount
+        in: query
+        type: number
+        required: true
+        description: 증감량
+    responses:
+      '200':
+        $ref: "../responses/common.yaml#/successResponseNoData"
+      '400':
+        $ref: "../responses/common.yaml#/badRequest"
+      '500':
+        $ref: "../responses/common.yaml#/internalServerError"
+
+
+
+
+
+
+
+
+

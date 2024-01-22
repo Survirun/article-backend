@@ -1,0 +1,43 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: Survirun REST API docs
+  description: Survirun의 웹과 앱을 위한 REST API 문서입니다
+  license:
+    name: Hyunju Yang
+servers:
+  - url: http://localhost:3000/api/
+
+components:
+  securitySchemas:
+    UIDAuth:
+      type: apiKey
+      in: header
+      name: authorization
+  schemas:
+    User:
+      $ref: './schemas/user.yaml#/user'
+    Exercise:
+      $ref: './schemas/exercise.yaml#/exercise'
+    ExerciseRequest:
+      $ref: './schemas/exercise.yaml#/exercise_req'
+
+paths:
+  /user/exist/{uid}:
+    $ref: "./apis/user.yaml#/get_user_exist_uid"
+  /user/new:
+    $ref: "./apis/user.yaml#/post_user_new"
+  /user/my:
+    get:
+      $ref: "./apis/user.yaml#/my/get"
+    patch:
+      $ref: "./apis/user.yaml#/my/patch"
+  /user/my/proficiency:
+    patch:
+      $ref: "./apis/user.yaml#/my_proficiency/patch"
+  /exercise/log:
+    get:
+      $ref: "./apis/exercise.yaml#/exercise_log/get"
+    post:
+      $ref: "./apis/exercise.yaml#/exercise_log/post"
+

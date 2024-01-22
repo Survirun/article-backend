@@ -1,0 +1,11 @@
+user_info:
+  description: 유저의 기본 정보
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/user.yaml#/user"
+no_user_found:
+  description: 유저 없음
+user_found:
+  description: 유저 존재
+

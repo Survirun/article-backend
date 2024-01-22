@@ -1,0 +1,64 @@
+exercise:
+  type: object
+  properties:
+    uid:
+      type: string
+      description: 파이어베이스를 통해 로그인한 유저의 고유 ID
+    time:
+      type: number
+      description: 유저가 운동을 진행한 시간(초)
+    finishedTime:
+      type: number
+      description: 유저가 운동을 끝낸 시각(unix timestamp)
+    distance:
+      type: number
+      description: 유저의 움직인 거리
+    calorie:
+      type: number
+      description: 유저가 소모한 칼로리
+    speed:
+      type: number
+      description: 유저의 평균 분속 km/min
+    img:
+      type: string
+      description: 유저의 이동한 경로에 대한 이미지 리소스
+exercise_req:
+  type: object
+  properties:
+    time:
+      type: number
+      description: 유저가 운동을 진행한 시간(초)
+    distance:
+      type: number
+      description: 유저의 움직인 거리
+    calorie:
+      type: number
+      description: 유저가 소모한 칼로리
+    speed:
+      type: number
+      description: 유저의 평균 분속 km/min
+    img:
+      type: string
+      description: 유저의 이동한 경로에 대한 이미지 리소스
+exercise_res:
+  type: object
+  properties:
+    time:
+      type: number
+      description: 유저가 운동을 진행한 시간(초)
+    finishedTime:
+      type: number
+      description: 유저가 운동을 끝낸 시각(unix timestamp)
+    distance:
+      type: number
+      description: 유저의 움직인 거리
+    calorie:
+      type: number
+      description: 유저가 소모한 칼로리
+    speed:
+      type: number
+      description: 유저의 평균 분속 km/min
+    img:
+      type: string
+      description: 유저의 이동한 경로에 대한 이미지 리소스
+
