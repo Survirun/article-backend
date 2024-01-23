@@ -2,7 +2,7 @@ import {Application, Router, Request, Response, NextFunction} from "express";
 import { celebrate, Joi } from 'celebrate';
 import controller from '../../utils/controller';
 import Authorization from '../middlewares/authorization';
-import db from "../../models/db";
+import controllers from '../../controllers';
 
 const route = Router()
 
@@ -18,7 +18,7 @@ export default (
                 uid: Joi.string().required()
             })
         }),
-        controller(() => {})
+        controller(controllers.userController.isAlreadyRegister)
     );
 
     route.post(
@@ -30,11 +30,12 @@ export default (
                 name: Joi.string().required()
             })
         }),
-        controller(() => {})
+        controller(controllers.userController.createNewUser)
     );
 
     route.patch(
         '/:uid/keywords',
+        Authorization.checkUID,
         celebrate({
             params: Joi.object({
                 uid: Joi.string().required()
@@ -43,17 +44,18 @@ export default (
                 keywords: Joi.array().items(Joi.string()).min(1).required()
             })
         }),
-        controller(() => {})
+        controller(controllers.userController.updateKeywords)
     );
 
     route.get(
-        '/:uid',
+        '/my',
+        Authorization.checkUID,
         celebrate({
             params: Joi.object({
                 uid: Joi.string().required()
             })
         }),
-        controller(() => {})
+        controller(controllers.userController.getMy)
     )
 }
 

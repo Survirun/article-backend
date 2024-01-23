@@ -4,7 +4,8 @@ import {CUSTOM_ERROR, CustomError} from '../../constants/error'
 import {NextFunction, Request, Response} from 'express'
 const checkUID = async (req: Request, res: Response, next: NextFunction) => {
     if(req.headers.uid) {
-        next()
+        res.locals._id = req.headers.uid;
+        next();
     } else {
         return ResponseUtil.fail(res, CUSTOM_ERROR.WRONG_ARGS.status, CUSTOM_ERROR.WRONG_ARGS.message)
     }
