@@ -67,7 +67,7 @@ const blogKeyword = {
 
 }
 
-type keyType = 'IT기기' | '개발' | "디자인" | "기획";
+type keyType = 'IT기기' | '안드로이드 개발' | "백엔드" | "WEB" | "AI" | "디자인" | "기획";
 type Keys = {
     [key in keyType]: Array<string>
 }
