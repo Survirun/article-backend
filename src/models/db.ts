@@ -1,5 +1,8 @@
+import Firestore from './firestore'
 import User from './user'
 
+
 export default {
-    user: User
+    user: User,
+    firestore: Firestore
 }

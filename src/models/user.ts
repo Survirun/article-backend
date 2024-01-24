@@ -42,6 +42,7 @@ export default {
         return User.findOne({uid: uid},{__id: 0, __v: 0});
     },
     setKeywords: async (uid: string, keywords: Array<string>) => {
+        //@ts-ignore
         return User.updateOne({uid: uid}, {$set: {keywords: keywords}});
     }
 }

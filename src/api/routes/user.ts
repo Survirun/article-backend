@@ -50,11 +50,6 @@ export default (
     route.get(
         '/my',
         Authorization.checkUID,
-        celebrate({
-            params: Joi.object({
-                uid: Joi.string().required()
-            })
-        }),
         controller(controllers.userController.getMy)
     )
 }
