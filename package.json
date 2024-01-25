@@ -9,8 +9,6 @@
   "scripts": {
     "lint": "eslint --ext .ts src",
     "start": "node dist/app.js",
-    "api-docs": "swagger-cli bundle ./swagger/openapi.yaml --outfile ./swagger/swagger.yaml --type yaml",
-    "predev": "npm run api-docs",
     "dev": "cross-env NODE_ENV=development nodemon --exec ts-node src/app.ts",
     "dev:mac": "nodemon --exec ts-node src/app.ts",
     "build": "tsc",
@@ -21,14 +19,16 @@
   },
   "author": "Hyunju Yang",
   "license": "ISC",
-  "devDependencies": {
-    "eslint": "^8.56.0",
-    "nodemon": "^3.0.3",
-    "prettier": "^3.2.4"
-  },
   "dependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
     "@joi/date": "^2.1.0",
+    "@types/compression": "^1.7.5",
+    "@types/cookie-parser": "^1.4.6",
+    "@types/express": "^4.17.21",
+    "@types/morgan": "^1.9.9",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
+    "@types/yamljs": "^0.2.34",
     "argparse": "^2.0.1",
     "celebrate": "^15.0.3",
     "cliui": "^8.0.1",
@@ -46,17 +46,15 @@
     "morgan": "^1.10.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
-    "yamljs": "^0.3.0",
-    "yargs": "^17.7.2",
-    "yargs-parser": "^21.1.1",
     "tsc": "^2.0.4",
     "typescript": "^5.3.3",
-    "@types/compression": "^1.7.5",
-    "@types/cookie-parser": "^1.4.6",
-    "@types/express": "^4.17.21",
-    "@types/morgan": "^1.9.9",
-    "@types/swagger-jsdoc": "^6.0.4",
-    "@types/swagger-ui-express": "^4.1.6",
-    "@types/yamljs": "^0.2.34"
+    "yamljs": "^0.3.0",
+    "yargs": "^17.7.2",
+    "yargs-parser": "^21.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "nodemon": "^3.0.3",
+    "prettier": "^3.2.4"
   }
 }
