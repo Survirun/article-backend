@@ -1,9 +1,6 @@
 {
   "name": "article-backend",
   "version": "0.0.1",
-  "engines": {
-    "node": "18.18.0"
-  },
   "description": "backend of article",
   "main": "dist/app.js",
   "scripts": {
@@ -16,6 +13,9 @@
     "fix:format": "npm run fix:prettier",
     "fix:prettier": "prettier --write \"src/**/*.ts\"",
     "fix:lint": "eslint \"src/**/*.ts\" --fix"
+  },
+  "engines": {
+    "node": "18.x"
   },
   "author": "Hyunju Yang",
   "license": "ISC",
