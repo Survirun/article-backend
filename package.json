@@ -31,7 +31,9 @@
     "@types/yamljs": "^0.2.34",
     "eslint": "^8.56.0",
     "nodemon": "^3.0.3",
-    "prettier": "^3.2.4"
+    "prettier": "^3.2.4",
+    "tsc": "^2.0.4",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "@apidevtools/swagger-cli": "^4.0.4",
@@ -53,8 +55,6 @@
     "morgan": "^1.10.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
-    "tsc": "^2.0.4",
-    "typescript": "^5.3.3",
     "yamljs": "^0.3.0",
     "yargs": "^17.7.2",
     "yargs-parser": "^21.1.1"
