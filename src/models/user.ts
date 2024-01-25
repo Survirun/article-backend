@@ -39,7 +39,7 @@ export default {
         return newUser.save();
     },
     getUser: async (uid: string) => {
-        return User.findOne({uid: uid},{__id: 0, __v: 0});
+        return User.findOne({uid: uid},{_id: 0, __v: 0});
     },
     setKeywords: async (uid: string, keywords: Array<string>) => {
         //@ts-ignore

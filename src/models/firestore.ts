@@ -1,16 +1,25 @@
 import { getFirestore, Filter } from 'firebase-admin/firestore';
 
+interface Article {
+    title: string;
+    link: string;
+    sitename: string;
+    displayLink: string;
+    keywords: Array<string>;
+    thumbnail: string;
+    date: string;
+    snippet: string;
+    cx: number;
+}
+
 export default {
     getArticle: async(keywords: Array<string>) => {
-        const result = await getFirestore().collection("web").where('keywords', 'array-contains-any', keywords).limit(30).get()
-        if(result.empty) {
-            return []
-        } else {
-            let arr: any[] = [];
-            for(const value of result.docs) {
-                arr.push(value.data())
-            } 
-            return arr;
+        let result: Article[] = []
+        for(const keyword of keywords) {
+            const rawData = await getFirestore().collection(keyword).limit(30).get()
+            const data = rawData.docs.map(doc => doc.data() as Article)
+            result = [...result, ...data]       
         }
+        return result
     }
 }

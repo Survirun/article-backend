@@ -11,18 +11,8 @@ export default (
 ) => {
     app.use('/user', route);
 
-    route.get(
-        '/exist/:uid',
-        celebrate({
-            params: Joi.object({
-                uid: Joi.string().required()
-            })
-        }),
-        controller(controllers.userController.isAlreadyRegister)
-    );
-
     route.post(
-        '/new',
+        '/auth',
         celebrate({
             body: Joi.object({
                 uid: Joi.string().required(),

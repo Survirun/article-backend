@@ -11,12 +11,18 @@ export default {
         else throw new CustomError(CUSTOM_ERROR.USER_NOT_FOUND);
     },
     createNewUser: async (req: Request, res: Response) => {
-        const newUser = await db.user.createNewUser(
-            req.body.uid, 
-            req.body.email,
-            req.body.name
-        );
-        return ResponseUtil.success(res,201,null);
+        const isReg = await db.user.isAlreadyRegistered(req.body.uid)
+        if(!isReg) {
+            const newUser = await db.user.createNewUser(
+                req.body.uid, 
+                req.body.email,
+                req.body.name
+            );
+            return ResponseUtil.success(res,201,null);
+        } else {
+            return ResponseUtil.success(res, 200, null);
+        }
+        
     },
     isAlreadyRegister: async(req: Request, res: Response) => {
         const code = (await db.user.isAlreadyRegistered(req.params.uid)) ? 200 : 404;
@@ -24,11 +30,7 @@ export default {
     },
     updateKeywords: async (req: Request, res: Response) => {
         const keywords = req.body.keywords;
-        let keywordList: string[] = [];
-        for(const k of keywords) {
-            keywordList = [...keywordList, ...category.getSKeyword(k)]
-        }
-        const result = await db.user.setKeywords(res.locals._id, keywordList);
+        const result = await db.user.setKeywords(res.locals._id, keywords);
         return ResponseUtil.success(res, 200, null)
     }
 }
