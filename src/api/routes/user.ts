@@ -28,7 +28,7 @@ export default (
         Authorization.checkUID,
         celebrate({
             body: Joi.object({
-                keywords: Joi.array().items(Joi.string()).min(1).required()
+                keywords: Joi.array().items(Joi.number()).min(1).required()
             })
         }),
         controller(controllers.userController.updateKeywords)

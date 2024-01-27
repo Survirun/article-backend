@@ -16,7 +16,7 @@ export default {
     getArticle: async(keywords: Array<string>) => {
         let result: Article[] = []
         for(const keyword of keywords) {
-            const rawData = await getFirestore().collection(keyword).limit(30).get()
+            const rawData = await getFirestore().collection(keyword).limit(10).get()
             const data = rawData.docs.map(doc => doc.data() as Article)
             result = [...result, ...data]       
         }

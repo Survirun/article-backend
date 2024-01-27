@@ -19,8 +19,8 @@ const user = new Schema({
         default: "아티클 유저"
     },
     keywords: {
-        type: [String],
-        default: []
+        type: [Number],
+        default: [0]
     }
 })
 
@@ -41,7 +41,7 @@ export default {
     getUser: async (uid: string) => {
         return User.findOne({uid: uid},{_id: 0, __v: 0});
     },
-    setKeywords: async (uid: string, keywords: Array<string>) => {
+    setKeywords: async (uid: string, keywords: Array<number>) => {
         //@ts-ignore
         return User.updateOne({uid: uid}, {$set: {keywords: keywords}});
     }
