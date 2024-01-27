@@ -23,13 +23,10 @@ export default (
         controller(controllers.userController.createNewUser)
     );
 
-    route.patch(
-        '/:uid/keywords',
+    route.post(
+        '/my/keywords',
         Authorization.checkUID,
         celebrate({
-            params: Joi.object({
-                uid: Joi.string().required()
-            }),
             body: Joi.object({
                 keywords: Joi.array().items(Joi.string()).min(1).required()
             })
