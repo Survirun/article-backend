@@ -7,9 +7,11 @@ enum Keyword2Code {
     "웹 개발" = 5,
     "AI 개발" = 6,
     "디자인" = 7,
-    "기획" = 8
+    "기획" = 8,
+    "IOS 개발" = 9,
+    "IT 소식" = 10
 }
 
-const devKey = [3,4,5,6]
+const devKey = [3,4,5,6,9]
 
 export default { Keyword2Code, devKey }
