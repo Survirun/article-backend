@@ -30,6 +30,7 @@ export default {
         return ResponseUtil.success(res, code, null);
     },
     updateKeywords: async (req: Request, res: Response) => {
+        console.log(111)
         const keywords = req.body.keywords;
         keywords.push(0) //common
         if(KeywordUtil.includedDevKey(keywords)) keywords.push(1) //devcommon
