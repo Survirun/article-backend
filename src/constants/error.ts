@@ -17,6 +17,8 @@ class CustomError extends Error {
         super(CUSTOM_ERROR.message)
         this.message = CUSTOM_ERROR.message
         this.status = CUSTOM_ERROR.status
+
+    
     }
 }
 

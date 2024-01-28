@@ -6,6 +6,8 @@ const commonResponse = (isSuccess: boolean, data: any = null) => {
 
 export default {
     fail: (res: Response, statusCode: number, errMsg: string) => {
+        console.log(statusCode)
+        console.log(errMsg)
         return res.status(statusCode).json(commonResponse(false, errMsg))
     },
     success: (res: Response, statusCode: number, data: any) => {
