@@ -10,4 +10,6 @@ enum Keyword2Code {
     "기획" = 8
 }
 
-export default Keyword2Code
+const devKey = [3,4,5,6]
+
+export default { Keyword2Code, devKey }
