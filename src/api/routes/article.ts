@@ -14,4 +14,10 @@ export default (app: Router) => {
         Authorization.checkUID,
         controller(controllers.articleController.getMyArticles)
     )
+
+    route.get(
+        '/:keyword',
+        Authorization.checkUID,
+        controller(controllers.articleController.getMyArticleByKeywordId)
+    )
 }

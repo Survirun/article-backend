@@ -30,11 +30,11 @@ export default {
         return ResponseUtil.success(res, code, null);
     },
     updateKeywords: async (req: Request, res: Response) => {
-        console.log(111)
-        const keywords = req.body.keywords;
+        const keywords: number[] = req.body.keywords;
         keywords.push(0) //common
         if(KeywordUtil.includedDevKey(keywords)) keywords.push(1) //devcommon
-        const result = await db.user.setKeywords(res.locals._id, keywords);
+        const uKey = [...new Set(keywords)]
+        const result = await db.user.setKeywords(res.locals._id, uKey);
         return ResponseUtil.success(res, 200, null)
     }
 }
