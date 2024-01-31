@@ -1,8 +1,10 @@
+import Bookmark from './bookmark'
 import Firestore from './firestore'
 import User from './user'
 
 
 export default {
     user: User,
-    firestore: Firestore
+    firestore: Firestore,
+    bookmark: Bookmark
 }

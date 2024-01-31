@@ -18,6 +18,11 @@ export default (app: Router) => {
     route.get(
         '/:keyword',
         Authorization.checkUID,
+        celebrate({
+            params: Joi.object({
+                keyword: Joi.number()
+            })
+        }),
         controller(controllers.articleController.getMyArticleByKeywordId)
     )
 }

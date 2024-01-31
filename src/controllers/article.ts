@@ -9,18 +9,16 @@ export default {
     getMyArticles: async (req: Request, res: Response) => {
         const user = await db.user.getUser(res.locals._id)
         //@ts-ignore
-        const keywordsIdList = user.keywords
-        const keywords = keywordsIdList.map(v => Keyword.Keyword2Code[v])
+        const keywords = user.keywords
         const articles = await db.firestore.getArticle(keywords)
         const shuffledArticles = ShuffleUtil(articles)
         return ResponseUtil.success(res, 200, shuffledArticles)
     },
     getMyArticleByKeywordId: async (req: Request, res: Response) => {
         //@ts-ignore
-        const keyword = Keyword.Keyword2Code[req.params.keyword]
+        const keyword: number = req.params.keyword
         const articles = await db.firestore.getArticle([keyword])
         const shuffledArticles = ShuffleUtil(articles)
         return ResponseUtil.success(res, 200, shuffledArticles)
-
     }
 }
