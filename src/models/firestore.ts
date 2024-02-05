@@ -15,7 +15,7 @@ interface Article {
 
 export default {
     getArticle: async(keywords: Array<number>) => {
-        const rawData = await getFirestore().collection("web").where("category", 'in', keywords).limit(30).get()
+        const rawData = await getFirestore().collection("web").where("category", 'in', keywords).get()
         const data = rawData.docs.map(doc => doc.data() as Article)
         return data
     },
