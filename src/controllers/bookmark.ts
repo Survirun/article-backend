@@ -15,11 +15,12 @@ export default {
         return ResponseUtil.success(res,200,articles)
     },
     addBookmark: async (req: Request, res: Response) => {
-        const result = await db.bookmark.addBookmark(res.locals._id, req.params.articleId)
-        return ResponseUtil.success(res, 200, null)
-    },
-    removeBookmark: async (req: Request, res: Response) => {
-        const result = await db.bookmark.removeBookmark(res.locals._id, req.params.articleId)
-        return ResponseUtil.success(res, 200, null)
+        if(await db.bookmark.isAlreadyIn(res.locals._id, req.params.articleId)) {
+            const result = await db.bookmark.removeBookmark(res.locals._id, req.params.articleId)
+            return ResponseUtil.success(res, 200, false)
+        } else {
+            const result = await db.bookmark.addBookmark(res.locals._id, req.params.articleId)
+            return ResponseUtil.success(res, 200, true)
+        }
     }
 }

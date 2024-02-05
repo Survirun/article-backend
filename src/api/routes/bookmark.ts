@@ -25,15 +25,4 @@ export default (app: Router) => {
         }),
         controller(controllers.bookmarkController.addBookmark)
     )
-
-    route.delete(
-        '/:articleId',
-        Authorization.checkUID,
-        celebrate({
-            params: Joi.object({
-                articleId: Joi.string().required()
-            })
-        }),
-        controller(controllers.bookmarkController.removeBookmark)
-    )
 }

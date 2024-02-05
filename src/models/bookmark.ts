@@ -30,5 +30,8 @@ export default {
     },
     removeBookmark: async (uid: string, articleId: string) => {
         return await Bookmark.updateOne({uid: uid}, {$pull: {bookmarks: articleId}}, { upsert: true })
+    },
+    isAlreadyIn: async (uid: string, articleId: string) => {
+        return !!(await Bookmark.findOne({uid: uid, bookmarks: {$in: [articleId]}}))
     }
 }
