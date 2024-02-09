@@ -7,19 +7,20 @@ const bookmark = new Schema({
         required: true,
         unique: true
     },
-    bookmarks: {
-        type: [String],
-        default: []
-    }
+    bookmarks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "article"
+    }]
 })
 
 const Bookmark = mongoose.model('bookmark', bookmark);
 
 export default {
     getBookmark: async (uid: string) => {
-        const bookmark = await Bookmark.findOne({uid: uid}, {_id: 0, __v: 0})
+        const bookmark = await Bookmark.findOne({uid: uid}, {_id: 0, __v: 0}).populate({path: "bookmarks", select: {__v: 0}});
+
         if(!bookmark) {
-            await new Bookmark({uid: uid}).save()
+            await new Bookmark({uid: uid, bookmarks: []}).save()
             return []
         }
         //@ts-ignore

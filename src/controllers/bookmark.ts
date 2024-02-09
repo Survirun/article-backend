@@ -7,11 +7,10 @@ import ShuffleUtil from "../utils/shuffle"
 
 export default {
     getBookmarks: async (req: Request, res: Response) => {
-        const bookmarksId: string[] = await db.bookmark.getBookmark(res.locals._id)
-        if(bookmarksId.length == 0) {
+        const articles = await db.bookmark.getBookmark(res.locals._id)
+        if(articles.length == 0) {
             return ResponseUtil.success(res, 200, [])
         }
-        const articles = await db.firestore.getArticlesByDocId(bookmarksId)
         return ResponseUtil.success(res,200,articles)
     },
     addBookmark: async (req: Request, res: Response) => {
