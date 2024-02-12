@@ -48,6 +48,6 @@ const Article = mongoose.model('article', article);
 
 export default {
     getArticles: async (categories: Array<number>) => {
-        return await Article.find({category: {$in: categories}}, {__v: 0}).limit(30);
+        return await Article.find({category: {$in: categories}}, {__v: 0}).limit(30).lean();
     }
 }

@@ -28,7 +28,7 @@ const User = mongoose.model('user', user);
 
 export default {
     isAlreadyRegistered: async (uid: string) => {
-        return !!(await User.findOne({uid: uid}))
+        return !!(await User.findOne({uid: uid}).lean())
     },
     createNewUser: async (uid: string, email: string, name: string) => {
         const newUser = new User({
@@ -39,10 +39,10 @@ export default {
         return newUser.save();
     },
     getUser: async (uid: string) => {
-        return User.findOne({uid: uid},{_id: 0, __v: 0});
+        return User.findOne({uid: uid},{_id: 0, __v: 0}).lean();
     },
     setKeywords: async (uid: string, keywords: Array<number>) => {
         //@ts-ignore
-        return User.updateOne({uid: uid}, {$set: {keywords: keywords}});
+        return await User.updateOne({uid: uid}, {$set: {keywords: keywords}}).lean();
     }
 }
