@@ -42,4 +42,15 @@ export default (app: Router) => {
         controller(controllers.logController.addShareLog)
     );
 
+    route.post(
+        '/multi',
+        Authorization.checkUID,
+        celebrate({
+            body: Joi.object({
+                logs: Joi.array().min(1).required()
+            })
+        }),
+        controller(controllers.logController.addMultiLog)
+    )
+
 }
