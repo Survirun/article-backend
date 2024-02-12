@@ -52,5 +52,37 @@ export default {
     },
     addWeight: async (articleId: string, weight: number) => {
         return await Article.updateOne({_id: articleId}, {$inc: {weight: weight}}).lean();
+    },
+    addBulkWeight: async (list: Array<any>) => {
+        let operation: Array<any> = [];
+        for(let i = 0; i < list.length; i++) {
+            switch(list[i].type) {
+                case "share": 
+                    operation.push({
+                        updateOne: {
+                            filter: {_id: list[i].articleId},
+                            update: {$inc: {weight: 30}}
+                        }
+                    })
+                    break;
+                case "bookmark":
+                    operation.push({
+                        updateOne: {
+                            filter: {_id: list[i].articleId},
+                            update: {$inc: {weight: 20}}
+                        }
+                    })
+                    break;
+                case "click":
+                    operation.push({
+                        updateOne: {
+                            filter: {_id: list[i].articleId},
+                            update: {$inc: {weight: 10}}
+                        }
+                    })
+                    break;
+            }
+        }
+        return await Article.bulkWrite(operation, {});
     }
 }

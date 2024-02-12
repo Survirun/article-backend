@@ -11,14 +11,14 @@ export default {
         //@ts-ignore
         const keywords = user.keywords
         const articles = await db.article.getArticles(keywords)
-        const shuffledArticles = ShuffleUtil(articles)
-        return ResponseUtil.success(res, 200, shuffledArticles)
+        //const shuffledArticles = ShuffleUtil(articles)
+        return ResponseUtil.success(res, 200, articles)
     },
     getMyArticleByKeywordId: async (req: Request, res: Response) => {
         //@ts-ignore
         const keyword: number = req.params.keyword
         const articles = await db.article.getArticles([keyword])
-        const shuffledArticles = ShuffleUtil(articles)
-        return ResponseUtil.success(res, 200, shuffledArticles)
+        //const shuffledArticles = ShuffleUtil(articles)
+        return ResponseUtil.success(res, 200, articles)
     }
 }
