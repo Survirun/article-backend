@@ -49,5 +49,8 @@ const Article = mongoose.model('article', article);
 export default {
     getArticles: async (categories: Array<number>) => {
         return await Article.find({category: {$in: categories}}, {__v: 0}).limit(30).lean();
+    },
+    addWeight: async (articleId: string, weight: number) => {
+        return await Article.updateOne({_id: articleId}, {$inc: {weight: weight}}).lean();
     }
 }
