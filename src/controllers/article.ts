@@ -10,14 +10,17 @@ export default {
         const user = await db.user.getUser(res.locals._id)
         //@ts-ignore
         const keywords = user.keywords
-        const articles = await db.article.getArticles(keywords)
+        const clickedIDs = await db.log.getSelectedLog(res.locals._id, "click")
+        //const articles = await db.article.getArticles(keywords)
         //const shuffledArticles = ShuffleUtil(articles)
+        const articles = await db.article.getArticlesAndSubtractClicked(keywords, clickedIDs);
         return ResponseUtil.success(res, 200, articles)
     },
     getMyArticleByKeywordId: async (req: Request, res: Response) => {
         //@ts-ignore
         const keyword: number = req.params.keyword
-        const articles = await db.article.getArticles([keyword])
+        const clickedIDs = await db.log.getSelectedLog(res.locals._id, "click")
+        const articles = await db.article.getArticlesAndSubtractClicked([keyword], clickedIDs);
         //const shuffledArticles = ShuffleUtil(articles)
         return ResponseUtil.success(res, 200, articles)
     }

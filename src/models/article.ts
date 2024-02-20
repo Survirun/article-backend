@@ -84,5 +84,23 @@ export default {
             }
         }
         return await Article.bulkWrite(operation, {});
+    },
+    getArticlesAndSubtractClicked: async (categories: Array<number>, alreadyShownIds: Array<any>) => {
+        return await Article.aggregate([
+            { $match: { category: { $in: categories } } },
+            {
+                $addFields: {
+                    weight: {
+                        $cond: {
+                            if: { $in: ["$id", alreadyShownIds] },
+                            then: { $subtract: ["$weight", 1000] },
+                            else: "$weight"
+                        }
+                    }
+                }
+            },
+            { $sort: { weight: -1 } },
+            { $project: { __v: 0 } }
+        ]).limit(30);
     }
 }
