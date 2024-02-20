@@ -21,14 +21,17 @@ const Log = mongoose.model("log", log);
 
 export default {
     addLog: async (uid: string, type: string, articleId: string) => {
-        return await new Log({uid: uid, type: type, articleId: articleId}).save()
+        const isAlready = await Log.findOne({uid: uid, type: type, articleId: articleId});
+        if(!isAlready) return await new Log({uid: uid, type: type, articleId: articleId}).save()
+        else return false;
     },
     addBulkLog: async (uid: string, list: Array<any>) => {
         let operation: Array<any> = [];
         for(let i = 0; i < list.length ; i++) {
             let obj = list[i]
             obj.uid = uid;
-            operation.push({ insertOne: {document: obj}})
+            const isAlready = await Log.findOne(obj);
+            if(!isAlready) operation.push({ insertOne: {document: obj}})
         }
         return await Log.bulkWrite(operation, {});
     },
