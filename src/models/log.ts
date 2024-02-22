@@ -37,6 +37,6 @@ export default {
     },
     getSelectedLog: async (uid: string, type: string) => {
         const slogs = await Log.find({uid: uid, type: type}, {articleId: 1}).lean();
-        return slogs.map(it => it.articleId.toString());
+        return slogs.map(it => it.articleId);
     }
 }
