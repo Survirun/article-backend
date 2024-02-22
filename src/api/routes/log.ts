@@ -45,10 +45,6 @@ export default (app: Router) => {
     route.post(
         '/multi',
         Authorization.checkUID,
-        async (req: Request, res: Response, next: NextFunction) => {
-            console.log(req.body)
-            next()
-        },
         celebrate({
             body: Joi.object({
                 logs: Joi.array().min(1).required()

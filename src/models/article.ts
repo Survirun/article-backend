@@ -89,18 +89,12 @@ export default {
         return await Article.aggregate([
             { $match: { category: { $in: categories } } },
             {
-                $addFields: {
-                    weight: {
-                        $cond: {
-                            if: { $in: ["$id", alreadyShownIds] },
-                            then: { $subtract: ["$weight", 1000] },
-                            else: "$weight"
-                        }
-                    }
+                $project: {
+                    weight: { $cond: [{ $in: ['$_id', alreadyShownIds] }, { $subtract: ['$weight', 1000] }, '$weight'] },
+                    category: 1, keywords: 1, cx: 1, title: 1, link: 1, displayLink: 1, snippet: 1, thumbnail: 1, date: 1, sitename: 1, _id: 1,
                 }
             },
             { $sort: { weight: -1 } },
-            { $project: { __v: 0 } }
         ]).limit(30);
     }
 }
