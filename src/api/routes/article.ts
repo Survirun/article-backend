@@ -12,6 +12,11 @@ export default (app: Router) => {
     route.get(
         '/',
         Authorization.checkUID,
+        celebrate({
+            query: Joi.object({
+                page: Joi.number().required()
+            })
+        }),
         controller(controllers.articleController.getMyArticles)
     )
 
@@ -21,6 +26,9 @@ export default (app: Router) => {
         celebrate({
             params: Joi.object({
                 keyword: Joi.number()
+            }),
+            query: Joi.object({
+                page: Joi.number().required()
             })
         }),
         controller(controllers.articleController.getMyArticleByKeywordId)

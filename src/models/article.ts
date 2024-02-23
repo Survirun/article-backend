@@ -45,6 +45,7 @@ const article = new Schema({
 });
 
 const Article = mongoose.model('article', article);
+const pageSize = 30;
 
 export default {
     getArticles: async (categories: Array<number>) => {
@@ -85,7 +86,7 @@ export default {
         }
         return await Article.bulkWrite(operation, {});
     },
-    getArticlesAndSubtractClicked: async (categories: Array<number>, alreadyShownIds: Array<any>) => {
+    getArticlesAndSubtractClicked: async (categories: Array<number>, alreadyShownIds: Array<any>, pageNum: number = 1) => {
         return await Article.aggregate([
             { $match: { category: { $in: categories } } },
             {
@@ -100,7 +101,13 @@ export default {
                 }
             },
             { $sort: { weightAdjusted: -1 } },
-            { $unset: 'weightAdjusted' }
-        ]).limit(30);
+            { $unset: 'weightAdjusted' },
+            { $skip: pageSize * (pageNum - 1) },
+            { $limit: pageSize }
+        ]);
+    },
+    getMaxPages: async (categories: Array<number>, alreadyShownIds: Array<any>) => {
+        const c = await Article.countDocuments({ category: { $in: categories } });
+        return Math.ceil( c / pageSize );
     }
 }

@@ -10,18 +10,29 @@ export default {
         const user = await db.user.getUser(res.locals._id)
         //@ts-ignore
         const keywords = user.keywords
+        //@ts-ignore
+        const page: number = parseInt(req.query.page)
         const clickedIDs = await db.log.getSelectedLog(res.locals._id, "click")
-        //const articles = await db.article.getArticles(keywords)
-        //const shuffledArticles = ShuffleUtil(articles)
-        const articles = await db.article.getArticlesAndSubtractClicked(keywords, clickedIDs);
-        return ResponseUtil.success(res, 200, articles)
+        const articles = await db.article.getArticlesAndSubtractClicked(keywords, clickedIDs, page)
+        const maxPages = await db.article.getMaxPages(keywords, clickedIDs)
+        return ResponseUtil.success(res, 200, {
+            page: page,
+            maxPage: maxPages,
+            articles: articles
+        })
     },
     getMyArticleByKeywordId: async (req: Request, res: Response) => {
         //@ts-ignore
         const keyword: number = req.params.keyword
+        //@ts-ignore
+        const page: number = parseInt(req.query.page)
         const clickedIDs = await db.log.getSelectedLog(res.locals._id, "click")
-        const articles = await db.article.getArticlesAndSubtractClicked([keyword], clickedIDs);
-        //const shuffledArticles = ShuffleUtil(articles)
-        return ResponseUtil.success(res, 200, articles)
+        const articles = await db.article.getArticlesAndSubtractClicked([keyword], clickedIDs, page)
+        const maxPages = await db.article.getMaxPages([keyword], clickedIDs)
+        return ResponseUtil.success(res, 200, {
+            page: page,
+            maxPage: maxPages,
+            articles: articles
+        })
     }
 }
