@@ -26,7 +26,7 @@ export default {
         const keyword: number = req.params.keyword
         //@ts-ignore
         const page: number = parseInt(req.query.page)
-        const clickedIDs = await db.log.getSelectedLog(res.locals._id, "click")
+        const clickedIDs = (res.locals._id == "guest") ? await db.log.getSelectedLog(res.locals._id, "click") : []
         const articles = await db.article.getArticlesAndSubtractClicked([keyword], clickedIDs, page)
         const maxPages = await db.article.getMaxPages([keyword], clickedIDs)
         return ResponseUtil.success(res, 200, {
