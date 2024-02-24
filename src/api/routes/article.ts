@@ -9,26 +9,32 @@ const route = Router()
 export default (app: Router) => {
     app.use('/article', route);
 
-    route.get(
+    route.post(
         '/',
         Authorization.checkUID,
         celebrate({
             query: Joi.object({
                 page: Joi.number().required()
+            }),
+            body: Joi.object({
+                passed: Joi.array().max(1000)
             })
         }),
         controller(controllers.articleController.getMyArticles)
     )
 
-    route.get(
+    route.post(
         '/:keyword',
         Authorization.checkUID,
         celebrate({
             params: Joi.object({
-                keyword: Joi.number()
+                keyword: Joi.number().required()
             }),
             query: Joi.object({
                 page: Joi.number().required()
+            }),
+            body: Joi.object({
+                passed: Joi.array().max(1000)
             })
         }),
         controller(controllers.articleController.getMyArticleByKeywordId)

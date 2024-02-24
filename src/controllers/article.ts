@@ -12,8 +12,9 @@ export default {
         const keywords = user.keywords
         //@ts-ignore
         const page: number = parseInt(req.query.page)
+        const passed: Array<any> = req.body.passed
         const clickedIDs = await db.log.getSelectedLog(res.locals._id, "click")
-        const articles = await db.article.getArticlesAndSubtractClicked(keywords, clickedIDs, page)
+        const articles = await db.article.getArticlesAndSubtractClicked(keywords, clickedIDs, passed, page)
         const maxPages = await db.article.getMaxPages(keywords, clickedIDs)
         return ResponseUtil.success(res, 200, {
             page: page,
@@ -26,8 +27,9 @@ export default {
         const keyword: number = req.params.keyword
         //@ts-ignore
         const page: number = parseInt(req.query.page)
+        const passed: Array<any> = req.body.passed
         const clickedIDs = (res.locals._id == "guest") ? await db.log.getSelectedLog(res.locals._id, "click") : []
-        const articles = await db.article.getArticlesAndSubtractClicked([keyword], clickedIDs, page)
+        const articles = await db.article.getArticlesAndSubtractClicked([keyword], clickedIDs, passed, page)
         const maxPages = await db.article.getMaxPages([keyword], clickedIDs)
         return ResponseUtil.success(res, 200, {
             page: page,

@@ -86,7 +86,8 @@ export default {
         }
         return await Article.bulkWrite(operation, {});
     },
-    getArticlesAndSubtractClicked: async (categories: Array<number>, alreadyShownIds: Array<any>, pageNum: number = 1) => {
+    getArticlesAndSubtractClicked: async (categories: Array<number>, alreadyShownIds: Array<any>, passedIds: Array<any>, pageNum: number = 1) => {
+        const passedObjectIds = (passedIds) ? passedIds.map(id => new mongoose.Types.ObjectId(id)) : [];
         return await Article.aggregate([
             { $match: { category: { $in: categories } } },
             {
@@ -95,7 +96,13 @@ export default {
                         $cond: [
                             { $in: [ '$_id',  alreadyShownIds] },
                             { $subtract: ['$weight', 1000] },
-                            '$weight'
+                            {
+                                $cond: [
+                                    { $in: ['$_id', passedObjectIds] },
+                                    { $subtract: ['$weight', 500] },
+                                    '$weight'
+                                ]
+                            }
                         ]
                     }
                 }
