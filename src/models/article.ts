@@ -45,7 +45,7 @@ const article = new Schema({
 });
 
 const Article = mongoose.model('article', article);
-const pageSize = 30;
+const pageSize = 20;
 
 export default {
     getArticles: async (categories: Array<number>) => {
@@ -95,11 +95,12 @@ export default {
                     weightAdjusted: {
                         $cond: [
                             { $in: [ '$_id',  alreadyShownIds] },
-                            { $subtract: ['$weight', 1000] },
+                            //{ $subtract: ['$weight', 1000] },
+                            0,
                             {
                                 $cond: [
                                     { $in: ['$_id', passedObjectIds] },
-                                    { $subtract: ['$weight', 500] },
+                                    0,
                                     '$weight'
                                 ]
                             }
