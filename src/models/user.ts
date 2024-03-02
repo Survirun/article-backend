@@ -21,6 +21,11 @@ const user = new Schema({
     keywords: {
         type: [Number],
         default: [0]
+    },
+    permission: {
+        type: String,
+        default: "user",
+        enum: ["user", "admin"]
     }
 })
 
