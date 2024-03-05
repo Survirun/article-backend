@@ -41,9 +41,6 @@ export default {
         const {articleId} = req.params;
         const {reason} = req.body;
         const result = await db.report.addReport(articleId, res.locals._id, reason)
-        return ResponseUtil.success(res,
-            result ? 200 : 400,
-            result ? null: "already reported"
-        )
+        return (result) ? ResponseUtil.success(res, 200,null) : ResponseUtil.fail(res,400,"already reported")
     }
 }
