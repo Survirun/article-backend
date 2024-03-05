@@ -3,6 +3,7 @@ import Firestore from './firestore'
 import User from './user'
 import Article from './article'
 import Log from './log'
+import Report from './report'
 
 
 export default {
@@ -10,5 +11,6 @@ export default {
     firestore: Firestore,
     bookmark: Bookmark,
     article: Article,
-    log: Log
+    log: Log,
+    report: Report
 }

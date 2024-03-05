@@ -23,6 +23,7 @@ export default (app: Router) => {
         controller(controllers.articleController.getMyArticles)
     )
 
+
     route.post(
         '/:keyword',
         Authorization.checkUID,
@@ -38,5 +39,19 @@ export default (app: Router) => {
             })
         }),
         controller(controllers.articleController.getMyArticleByKeywordId)
+    )
+
+    route.post(
+        "/report/:articleId",
+        Authorization.checkUID,
+        celebrate({
+            params: Joi.object({
+                articleId: Joi.string().required()
+            }),
+            body: Joi.object({
+                reason: Joi.string()
+            })
+        }),
+        controller(controllers.articleController.reportArticle)
     )
 }
