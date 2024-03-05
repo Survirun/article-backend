@@ -43,7 +43,7 @@ export default {
         const result = await db.report.addReport(articleId, res.locals._id, reason)
         return ResponseUtil.success(res,
             result ? 200 : 400,
-            result ? null: "already reported."
+            result ? null: "already reported"
         )
     }
 }
