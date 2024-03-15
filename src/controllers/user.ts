@@ -13,18 +13,16 @@ export default {
         else throw new CustomError(CUSTOM_ERROR.USER_NOT_FOUND);
     },
     createNewUser: async (req: Request, res: Response) => {
-        const id = hash(req.body.uid)
-        const isReg = await db.user.isAlreadyRegistered(id)
-        if(!isReg) {
+        const user = await db.user.getUser(req.body.uid);
+        if(!user) {
             const newUser = await db.user.createNewUser(
-                id, 
+                req.body.uid, 
                 req.body.email,
                 req.body.name
             );
-            return ResponseUtil.success(res,201, await jwt.publishAccessToken(id, "user"));
+            return ResponseUtil.success(res,201,"user");
         } else {
-            const userinfo = await db.user.getUser(id);
-            return ResponseUtil.success(res, 200, await jwt.publishAccessToken(userinfo?.uid as string, userinfo?.permission as string));
+            return ResponseUtil.success(res, 200, user.permission);
         }
         
     },
