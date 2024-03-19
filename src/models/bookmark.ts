@@ -35,5 +35,8 @@ export default {
     },
     isAlreadyIn: async (uid: string, articleId: string) => {
         return !!(await Bookmark.findOne({uid: uid, bookmarks: {$in: [articleId]}}).lean())
+    },
+    removeUser: async(uid: string) => {
+        return await Bookmark.deleteOne({uid: uid});
     }
 }

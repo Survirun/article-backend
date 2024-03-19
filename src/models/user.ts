@@ -49,5 +49,8 @@ export default {
     setKeywords: async (uid: string, keywords: Array<number>) => {
         //@ts-ignore
         return await User.updateOne({uid: uid}, {$set: {keywords: keywords}}).lean();
+    },
+    deleteUser: async(uid: string) => {
+        return await User.deleteOne({uid: uid});
     }
 }

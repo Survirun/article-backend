@@ -37,5 +37,12 @@ export default {
         const uKey = [...new Set(keywords)]
         const result = await db.user.setKeywords(res.locals._id, uKey);
         return ResponseUtil.success(res, 200, null)
+    },
+    deleteUserInfo: async (req: Request, res: Response) => {
+        const uid = res.locals._id;
+        await db.bookmark.removeUser(uid);
+        await db.log.deleteLogWhenExit(uid);
+        await db.user.deleteUser(uid);
+        return ResponseUtil.success(res, 200, null);
     }
 }
