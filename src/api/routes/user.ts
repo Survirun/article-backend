@@ -39,6 +39,12 @@ export default (
         Authorization.checkUID,
         controller(controllers.userController.getMy)
     )
+
+    route.delete(
+        '/my',
+        Authorization.checkUID,
+        controller(controllers.userController.deleteUserInfo)
+    )
 }
 
 
