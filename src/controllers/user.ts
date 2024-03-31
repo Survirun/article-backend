@@ -14,7 +14,7 @@ export default {
     },
     createNewUser: async (req: Request, res: Response) => {
         const user = await db.user.getUser(req.body.uid);
-        if(!user) {
+        if(!user || JSON.stringify(user) == "{}") {
             const newUser = await db.user.createNewUser(
                 req.body.uid, 
                 req.body.email,
@@ -22,6 +22,7 @@ export default {
             );
             return ResponseUtil.success(res,201,"user");
         } else {
+            //@ts-ignore
             return ResponseUtil.success(res, 200, user.permission);
         }
         
