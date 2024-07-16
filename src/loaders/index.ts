@@ -9,11 +9,11 @@ import {Application} from "express";
 
 export default async ( app: Application ) => {
     await envLoader()
-    await firebaseLoader()
+    //await firebaseLoader()
     await databaseLoader()
     await expressLoader(app)
     await routerLoader(app)
     await errorLoader(app)
-    await swaggerLoader(app)
+    //await swaggerLoader(app)
 
 }
