@@ -23,6 +23,11 @@ export default (app: Router) => {
         controller(controllers.articleController.getMyArticles)
     )
 
+    route.get(
+        '/keys',
+        controller(controllers.articleController.getAllKeywords)
+    )
+
 
     route.post(
         '/:keyword',

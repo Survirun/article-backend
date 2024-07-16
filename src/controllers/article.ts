@@ -42,5 +42,8 @@ export default {
         const {reason} = req.body;
         const result = await db.report.addReport(articleId, res.locals._id, reason)
         return (result) ? ResponseUtil.success(res, 200,null) : ResponseUtil.fail(res,400,"already reported")
+    },
+    getAllKeywords: async(req: Request, res: Response) => {
+        return ResponseUtil.success(res, 200, Keyword.AllKey);
     }
 }
