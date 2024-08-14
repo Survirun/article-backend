@@ -33,7 +33,7 @@ export default {
     },
     updateKeywords: async (req: Request, res: Response) => {
         const keywords: number[] = req.body.keywords;
-        keywords.push(0) //common
+        //keywords.push(0) //common
         if(KeywordUtil.includedDevKey(keywords)) keywords.push(1) //devcommon
         const uKey = [...new Set(keywords)]
         const result = await db.user.setKeywords(res.locals._id, uKey);

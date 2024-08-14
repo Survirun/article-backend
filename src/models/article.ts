@@ -88,13 +88,13 @@ export default {
     },
     getArticlesAndSubtractClicked: async (categories: Array<number>, alreadyShownIds: Array<any>, passedIds: Array<any>, pageNum: number = 1) => {
         const passedObjectIds = (passedIds) ? passedIds.map(id => new mongoose.Types.ObjectId(id)) : [];
-        return await Article.aggregate([
+        return Article.aggregate([
             { $match: { category: { $in: categories } } },
             {
                 $addFields: {
                     weightAdjusted: {
                         $cond: [
-                            { $in: [ '$_id',  alreadyShownIds] },
+                            { $in: ['$_id', alreadyShownIds] },
                             //{ $subtract: ['$weight', 1000] },
                             0,
                             {

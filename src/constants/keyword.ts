@@ -14,6 +14,6 @@ enum Keyword2Code {
 
 const devKey = [3,4,5,6,9]
 
-const AllKey = [  0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 12]
+const AllKey = [  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
 
 export default { Keyword2Code, devKey, AllKey }
