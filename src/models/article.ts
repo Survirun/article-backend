@@ -1,4 +1,5 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+
 const { Schema } = mongoose;
 
 const article = new Schema({
@@ -40,7 +41,8 @@ const article = new Schema({
     },
     weight: {
         type: Number
-    }
+    },
+
 
 });
 
@@ -87,8 +89,8 @@ export default {
         return await Article.bulkWrite(operation, {});
     },
     getArticlesAndSubtractClicked: async (categories: Array<number>, alreadyShownIds: Array<any>, passedIds: Array<any>, pageNum: number = 1) => {
-        const passedObjectIds = (passedIds) ? passedIds.map(id => new mongoose.Types.ObjectId(id)) : [];
-        return Article.aggregate([
+        const passedObjectIds = (passedIds.length > 0) ? passedIds.map(id => new mongoose.Types.ObjectId(id)) : [];
+        return await Article.aggregate([
             { $match: { category: { $in: categories } } },
             {
                 $addFields: {
@@ -101,18 +103,19 @@ export default {
                                 $cond: [
                                     { $in: ['$_id', passedObjectIds] },
                                     0,
-                                    '$weight'
-                                ]
-                            }
-                        ]
-                    }
-                }
+                                    '$weight',
+                                ],
+                            },
+                        ],
+                    },
+                },
             },
             { $sort: { weightAdjusted: -1 } },
             { $unset: 'weightAdjusted' },
             { $skip: pageSize * (pageNum - 1) },
-            { $limit: pageSize }
+            { $limit: pageSize },
         ]);
+        //return Article.find({}, { __v: 0 }).limit(30);
     },
     getMaxPages: async (categories: Array<number>, alreadyShownIds: Array<any>) => {
         const c = await Article.countDocuments({ category: { $in: categories } });

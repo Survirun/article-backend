@@ -28,10 +28,11 @@ export default {
         //@ts-ignore
         const page: number = parseInt(req.query.page)
         const passed: Array<any> = req.body.passed
-        const clickedIDs = (res.locals._id != "guest") ? await db.log.getSelectedLog(res.locals._id, "click") : []
+        const clickedIDs = (res.locals._id == "guest") ? await db.log.getSelectedLog(res.locals._id, "click") : []
         const keywords = (keyword == 0) ? Keyword.AllKey : [keyword];
         const articles = await db.article.getArticlesAndSubtractClicked(keywords, clickedIDs, passed, page)
-        const maxPages = await db.article.getMaxPages(keywords, clickedIDs)
+        const maxPages = await db.article.getMaxPages(keywords, clickedIDs)+1;
+        console.log(articles);
         return ResponseUtil.success(res, 200, {
             page: page,
             maxPage: maxPages,
