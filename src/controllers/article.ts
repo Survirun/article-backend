@@ -39,6 +39,24 @@ export default {
             articles: articles
         })
     },
+    getArticlesByKeywords: async (req: Request, res: Response) => {
+        const keywords: Array<number>  = req.body.keywords;
+        //@ts-ignore
+        const page: number = parseInt(req.query.page);
+        const clickedIDs = (res.locals._id != "guest") ? await db.log.getSelectedLog(res.locals._id, "click") : []
+        const data= new Map<string, object>();
+        for(let kw of keywords) {
+            const articles = await db.article.getArticlesAndSubtractClicked([kw], clickedIDs, [], page);
+            const maxPages = await db.article.getMaxPages([kw], clickedIDs)+1;
+            data.set(kw.toString(), {
+                page: page,
+                maxPage: maxPages,
+                articles: articles
+            });
+        }
+        return ResponseUtil.success(res, 200, Object.fromEntries(data));
+
+    },
     reportArticle: async(req: Request, res: Response) => {
         const {articleId} = req.params;
         const {reason} = req.body;

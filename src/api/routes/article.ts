@@ -28,6 +28,20 @@ export default (app: Router) => {
         controller(controllers.articleController.getAllKeywords)
     )
 
+    route.post(
+        '/keywords',
+        Authorization.checkUID,
+        celebrate({
+            query: Joi.object({
+                page: Joi.number().required()
+            }),
+            body: Joi.object({
+                keywords: Joi.array().max(30)
+            })
+        }),
+        controller(controllers.articleController.getArticlesByKeywords)
+    )
+
 
     route.post(
         '/:keyword',
