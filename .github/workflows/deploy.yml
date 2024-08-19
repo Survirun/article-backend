@@ -41,3 +41,4 @@ jobs:
             docker stop ${{ secrets.DOCKER_CONTAINER }} || true
             docker rm ${{ secrets.DOCKER_CONTAINER }} || true
             docker run -d -p 3000:3000 --env-file .env --name ${{ secrets.DOCKER_CONTAINER }} ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMG }}:latest
+            sudo systemctl restart nginx
