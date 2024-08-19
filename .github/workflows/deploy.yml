@@ -25,11 +25,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and push Docker image
         run: |
-          docker build -t "$DOCKER_USERNAME"/"$DOCKER_IMG":latest .
-          docker push "$DOCKER_USERNAME"/"$DOCKER_IMG":latest
-        env:
-          DOCKER_USERNAME: "${{ secrets.DOCKER_USERNAME }}"
-          DOCKER_IMG: "${{ secrets.DOCKER_IMG }}"
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMG }}:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMG }}:latest
   deploy:
     needs: build
     runs-on: ubuntu-latest
