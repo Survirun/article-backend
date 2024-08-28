@@ -9,12 +9,11 @@ export default {
     getMyArticles: async (req: Request, res: Response) => {
         const user = await db.user.getUser(res.locals._id)
         //@ts-ignore
-        const keywords = user.keywords
+        const keywords = (user != null) ? user.keywords : Keyword.AllKey;
         //@ts-ignore
         const page: number = parseInt(req.query.page)
-        const passed: Array<any> = req.body.passed
         const clickedIDs = await db.log.getSelectedLog(res.locals._id, "click")
-        const articles = await db.article.getArticlesAndSubtractClicked(keywords, clickedIDs, passed, page)
+        const articles = await db.article.getArticlesAndSubtractClicked(keywords, clickedIDs, [], page)
         const maxPages = await db.article.getMaxPages(keywords, clickedIDs)
         return ResponseUtil.success(res, 200, {
             page: page,
@@ -27,10 +26,9 @@ export default {
         const keyword: number = req.params.keyword
         //@ts-ignore
         const page: number = parseInt(req.query.page)
-        const passed: Array<any> = req.body.passed
         const clickedIDs = (res.locals._id != "guest") ? await db.log.getSelectedLog(res.locals._id, "click") : []
         const keywords = (keyword == 0) ? Keyword.AllKey : [keyword];
-        const articles = await db.article.getArticlesAndSubtractClicked(keywords, clickedIDs, passed, page)
+        const articles = await db.article.getArticlesAndSubtractClicked(keywords, clickedIDs, [], page)
         const maxPages = await db.article.getMaxPages(keywords, clickedIDs)+1;
         console.log(articles);
         return ResponseUtil.success(res, 200, {

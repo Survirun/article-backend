@@ -15,9 +15,6 @@ export default (app: Router) => {
         celebrate({
             query: Joi.object({
                 page: Joi.number().required()
-            }),
-            body: Joi.object({
-                passed: Joi.array().max(1000)
             })
         }),
         controller(controllers.articleController.getMyArticles)
@@ -52,9 +49,6 @@ export default (app: Router) => {
             }),
             query: Joi.object({
                 page: Joi.number().required()
-            }),
-            body: Joi.object({
-                passed: Joi.array().max(1000)
             })
         }),
         controller(controllers.articleController.getMyArticleByKeywordId)
