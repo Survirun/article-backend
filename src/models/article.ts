@@ -7,6 +7,9 @@ const article = new Schema({
         type: Number,
         required: true
     },
+    categories: { //v2
+        type: [Number],
+    }, 
     keywords: {
         type: [String],
         default: []
@@ -116,6 +119,28 @@ export default {
             { $limit: pageSize },
         ]);
         //return Article.find({}, { __v: 0 }).limit(30);
+    },
+    getArticlesV2: async(categories: Array<number>, pageNum: number = 1) => {
+        return await Article.aggregate([
+            { 
+                $match: {
+                    $or: [
+                        { category: { $in: categories } },
+                        { categories: {$in: categories }}
+                    ]
+                }
+            },
+            { $sort: { weight: -1 } },
+            { $skip: pageSize * (pageNum - 1) },
+            { $limit: pageSize },
+        ]);
+    },
+    getMaxPagesV2: async(categories: Array<number>) => {
+        const c = await Article.countDocuments({$or: [
+            { category: { $in: categories } },
+            { categories: { $in: categories } }
+        ]});
+        return Math.ceil( c / pageSize );
     },
     getMaxPages: async (categories: Array<number>, alreadyShownIds: Array<any>) => {
         const c = await Article.countDocuments({ category: { $in: categories } });
