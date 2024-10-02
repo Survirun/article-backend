@@ -130,10 +130,21 @@ export default {
                     ]
                 }
             },{
-                $project: {
-                    categories: { $cond: { if: { $gt: ["$category", null] }, then: ["$category"], else: "$categories" } }
+                $addFields: {
+                  categories: {
+                    $cond: {
+                      if: { $gt: ["$category", null] },
+                      then: ["$category"],
+                      else: "$categories"
+                    }
+                  }
                 }
-            },
+              },
+              {
+                $project: {
+                  category: 0 // category 필드는 제외합니다.
+                }
+              },
             { $sort: { weight: -1 } },
             { $skip: pageSize * (pageNum - 1) },
             { $limit: pageSize },
