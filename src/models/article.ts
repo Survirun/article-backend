@@ -129,6 +129,10 @@ export default {
                         { categories: {$in: categories }}
                     ]
                 }
+            },{
+                $project: {
+                    categories: { $cond: { if: { $gt: ["$category", null] }, then: ["$category"], else: "$categories" } }
+                }
             },
             { $sort: { weight: -1 } },
             { $skip: pageSize * (pageNum - 1) },
