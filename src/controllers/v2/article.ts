@@ -37,7 +37,7 @@ export default {
     },
     getArticlesByKeywords: async (req: Request, res: Response) => {
         //@ts-ignore
-        const keywords: Array<number> = req.query.keywords.split(",").map(Number);
+        const keywords: Array<number> = req.query.keywords;
         //@ts-ignore
         const page: number = parseInt(req.query.page);
         const data= new Map<string, object>();
