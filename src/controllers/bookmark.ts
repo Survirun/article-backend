@@ -7,7 +7,7 @@ import ShuffleUtil from "../utils/shuffle"
 
 export default {
     getBookmarks: async (req: Request, res: Response) => {
-        const articles = await db.bookmark.getBookmark(res.locals._id)
+        const articles = await db.bookmark.getBookmark_v2(res.locals._id)
         if(articles.length == 0) {
             return ResponseUtil.success(res, 200, [])
         }
