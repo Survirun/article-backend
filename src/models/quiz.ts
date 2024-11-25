@@ -22,6 +22,6 @@ const Quiz = mongoose.model('quizes', quizSchema);
 
 export default {
     getAllQuiz: async () => {
-        return Quiz.find({},{__v: 0, _id: 0});
+        return Quiz.find({},{__v: 0, _id: 0, "questions._id": 0, "questions.__v": 0});
     }
 }
