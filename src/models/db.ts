@@ -4,6 +4,7 @@ import User from './user'
 import Article from './article'
 import Log from './log'
 import Report from './report'
+import Quiz from './quiz';
 
 
 export default {
@@ -12,5 +13,6 @@ export default {
     bookmark: Bookmark,
     article: Article,
     log: Log,
-    report: Report
+    report: Report,
+    quiz: Quiz
 }

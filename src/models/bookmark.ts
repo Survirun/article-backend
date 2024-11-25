@@ -27,6 +27,34 @@ export default {
         //@ts-ignore
         return bookmark.bookmarks
     },
+    getBookmark_v2: async(uid: string) => {
+        const bookmarks = await Bookmark.aggregate([
+            { $match: { uid: uid } },
+
+            {
+                $lookup: {
+                    from: "articles",
+                    localField: "bookmarks",
+                    foreignField: "_id",
+                    as: "bookmarks"
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    __v: 0,
+                    "bookmarks.__v": 0
+                }
+            }
+        ]);
+        if (bookmarks.length === 0) {
+            await new Bookmark({ uid: uid, bookmarks: [] }).save();
+            return [];
+        }
+
+
+        return bookmarks[0]?.bookmarks || [];
+    },
     addBookmark: async (uid: string, articleId: string) => {
         return await Bookmark.updateOne({uid: uid}, {$addToSet: {bookmarks: articleId}}, { upsert: true }).lean()
     },
