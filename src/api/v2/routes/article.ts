@@ -31,6 +31,18 @@ export default (app: Router) => {
     )
 
     route.get(
+        '/search',
+        Authorization.checkUID,
+        celebrate({
+            query: Joi.object({
+                page: Joi.number().min(1).required(),
+                keyword: Joi.string().required()
+            })
+        }),
+        controller(controllers.articleControllerV2.getArticlesBySearchKeywords)
+    )
+
+    route.get(
         '/keywords',
         Authorization.checkUID,
         celebrate({

@@ -28,7 +28,6 @@ export default {
         const keywords = (keyword == 0) ? Keyword.AllKey : [keyword];
         const articles = await db.article.getArticlesV2(keywords, page)
         const maxPages = await db.article.getMaxPagesV2(keywords)+1;
-        console.log(articles);
         return ResponseUtil.success(res, 200, {
             page: page,
             maxPage: maxPages,
@@ -53,4 +52,18 @@ export default {
         return ResponseUtil.success(res, 200, Object.fromEntries(data));
 
     },
+    //for Chrome Extension API
+    getArticlesBySearchKeywords: async (req: Request, res: Response) => {
+        //@ts-ignore
+        const page: number = parseInt(req.query.page);
+        //@ts-ignore
+        const searchKeyword: string = req.query.keyword;
+        const maxPage = await db.article.getMaxPagesForSearchKeywords(searchKeyword);
+        const articles = await db.article.getArticlesBySearchKeywords(page, searchKeyword);
+        return ResponseUtil.success(res, 200, {
+            page: page,
+            maxPage: maxPage,
+            articles: articles
+        });
+    }
 }
