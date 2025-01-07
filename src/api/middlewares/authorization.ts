@@ -4,7 +4,7 @@ import * as jwt from "jsonwebtoken";
 
 import {NextFunction, Request, Response} from 'express'
 
-const exceptUrl = ['/api/article','/api/v2/article']
+const exceptUrl = ['/api/article','/api/v2/article','/api/v2/article/search']
 
 const checkUID = async (req: Request, res: Response, next: NextFunction) => {
     if(req.headers["uid"]) {

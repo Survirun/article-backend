@@ -49,6 +49,8 @@ const article = new Schema({
 
 });
 
+article.index({title: 'text'})
+
 const Article = mongoose.model('article', article);
 const pageSize = 20;
 
@@ -63,7 +65,7 @@ export default {
         let operation: Array<any> = [];
         for(let i = 0; i < list.length; i++) {
             switch(list[i].type) {
-                case "share": 
+                case "share":
                     operation.push({
                         updateOne: {
                             filter: {_id: list[i].articleId},
@@ -122,7 +124,7 @@ export default {
     },
     getArticlesV2: async(categories: Array<number>, pageNum: number = 1) => {
         return await Article.aggregate([
-            { 
+            {
                 $match: {
                     $or: [
                         { category: { $in: categories } },
@@ -160,5 +162,29 @@ export default {
     getMaxPages: async (categories: Array<number>, alreadyShownIds: Array<any>) => {
         const c = await Article.countDocuments({ category: { $in: categories } });
         return Math.ceil( c / pageSize );
+    },
+    getMaxPagesForSearchKeywords: async (searchKeyword: string) => {
+        const c = await Article.countDocuments(
+            {$text: {$search: searchKeyword}}
+        );
+        return Math.ceil( c / pageSize );
+    },
+    getArticlesBySearchKeywords: async (page: number, searchKeyword: string) => {
+        return Article.aggregate([
+            {$match: {$text: {$search: searchKeyword}}},
+            { $addFields: { score: { $meta: 'textScore' } } },
+            {
+                $sort: {
+                    score: -1
+                },
+            },
+            {
+                $project: {
+                    score: 0
+                }
+            },
+            { $skip: pageSize * (page - 1) },
+            { $limit: pageSize },
+        ]);
     }
 }
