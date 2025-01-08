@@ -58,6 +58,11 @@ export default {
         const page: number = parseInt(req.query.page);
         //@ts-ignore
         const searchKeyword: string = req.query.keyword;
+        //@ts-ignore
+        const pageSizeByAPI: number = parseInt(req.query.size);
+        if(pageSizeByAPI == undefined || pageSizeByAPI < 1) {
+            return ResponseUtil.fail(res, 400, "size not found");
+        }
         const maxPage = await db.article.getMaxPagesForSearchKeywords(searchKeyword);
         const articles = await db.article.getArticlesBySearchKeywords(page, searchKeyword);
         return ResponseUtil.success(res, 200, {
