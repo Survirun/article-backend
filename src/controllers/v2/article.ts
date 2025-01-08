@@ -63,8 +63,8 @@ export default {
         if(pageSizeByAPI == undefined || pageSizeByAPI < 1) {
             return ResponseUtil.fail(res, 400, "size not found");
         }
-        const maxPage = await db.article.getMaxPagesForSearchKeywords(searchKeyword);
-        const articles = await db.article.getArticlesBySearchKeywords(page, searchKeyword);
+        const maxPage = await db.article.getMaxPagesForSearchKeywords(searchKeyword, pageSizeByAPI);
+        const articles = await db.article.getArticlesBySearchKeywords(page, searchKeyword, pageSizeByAPI);
         return ResponseUtil.success(res, 200, {
             page: page,
             maxPage: maxPage,
