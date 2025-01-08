@@ -36,7 +36,8 @@ export default (app: Router) => {
         celebrate({
             query: Joi.object({
                 page: Joi.number().min(1).required(),
-                keyword: Joi.string().required()
+                keyword: Joi.string().required(),
+                size: Joi.number().default(10)
             })
         }),
         controller(controllers.articleControllerV2.getArticlesBySearchKeywords)

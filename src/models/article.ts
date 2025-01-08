@@ -163,13 +163,13 @@ export default {
         const c = await Article.countDocuments({ category: { $in: categories } });
         return Math.ceil( c / pageSize );
     },
-    getMaxPagesForSearchKeywords: async (searchKeyword: string) => {
+    getMaxPagesForSearchKeywords: async ( searchKeyword: string, pageSizeByAPI: number = 10) => {
         const c = await Article.countDocuments(
             {$text: {$search: searchKeyword}}
         );
-        return Math.ceil( c / pageSize );
+        return Math.ceil( c / pageSizeByAPI );
     },
-    getArticlesBySearchKeywords: async (page: number, searchKeyword: string) => {
+    getArticlesBySearchKeywords: async (page: number, searchKeyword: string, pageSizeByAPI: number = 10) => {
         return Article.aggregate([
             {$match: {$text: {$search: searchKeyword}}},
             { $addFields: { score: { $meta: 'textScore' } } },
@@ -183,8 +183,8 @@ export default {
                     score: 0
                 }
             },
-            { $skip: pageSize * (page - 1) },
-            { $limit: pageSize },
+            { $skip: pageSizeByAPI * (page - 1) },
+            { $limit: pageSizeByAPI },
         ]);
     }
 }
