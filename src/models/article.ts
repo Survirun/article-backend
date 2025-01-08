@@ -172,7 +172,20 @@ export default {
     getArticlesBySearchKeywords: async (page: number, searchKeyword: string, pageSizeByAPI: number = 10) => {
         return Article.aggregate([
             {$match: {$text: {$search: searchKeyword}}},
-            { $addFields: { score: { $meta: 'textScore' } } },
+            {
+                $addFields: {
+                    categories: {
+                        $cond: {
+                            if: { $gt: ["$category", null] },
+                            then: ["$category"],
+                            else: "$categories"
+                        }
+                    },
+                    score: {
+                        $meta: 'textScore'
+                    }
+                }
+            },
             {
                 $sort: {
                     score: -1
@@ -180,7 +193,8 @@ export default {
             },
             {
                 $project: {
-                    score: 0
+                    score: 0,
+                    category: 0,
                 }
             },
             { $skip: pageSizeByAPI * (page - 1) },
